@@ -3,7 +3,7 @@
 ## Getting Started
 * Clone the repo
 ```shell script
-git clone https://github.com/FullStackAtBrownTeam/project-lab.git
+git clone --branch <branch_name> https://github.com/FullStackAtBrownTeam/project-lab.git
 ```
 
 ### Starting Server (Express/Node.js App)
@@ -16,7 +16,7 @@ cd server
 npm install
 ```
 * Install postgresql and make sure it is working
-* Edit configurations (default works too) in config/config.json file
+* Edit configurations (default works too) in `config/config.json` file
 * Create database using sequelize
 ```shell script
 sequelize db:create
@@ -25,7 +25,7 @@ sequelize db:create
 ```shell script
 node scripts/sync_database.js
 ```
-* Start your app
+* Start the server
 ```shell script
 npm start
 ```
