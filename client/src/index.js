@@ -1,12 +1,34 @@
-import React from 'react';
+import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import App from './components/App';
+import Spinner from './components/Spinner';
 import reportWebVitals from './reportWebVitals';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Roboto',
+      'MetDemo',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '-apple-system',
+    ].join(','),
+  },
+})
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Suspense fallback={<Spinner />}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </Suspense>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
