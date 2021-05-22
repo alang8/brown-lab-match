@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "ivosu",
+    "username": "root",
     "password": null,
     "database": "lab_database",
     "host": "127.0.0.1",
