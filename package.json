@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "cd server && npm install && node ./bin/www",
+        "start": "npm install && cd server && npm install && node ./bin/www",
         "sync_database": "cd server && npm install && node ./scripts/sync_database.js"
     },
     "dependencies": {
