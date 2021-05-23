@@ -5,6 +5,5 @@
     "scripts": {
         "start": "cd server && npm install && node ./bin/www",
         "sync_database": "cd server && npm install && node ./scripts/sync_database.js"
-    },
-    "dependencies": {}
+    }
 }
