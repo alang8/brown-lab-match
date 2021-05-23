@@ -6,6 +6,7 @@ const router = express.Router();
 const Op = Sequelize.Op;
 
 // Post a lab for testing purposes
+/*
 router.post('/lab', async(req,res) =>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -14,16 +15,12 @@ router.post('/lab', async(req,res) =>{
             .json({ errors: errors.array() });
     }
     const {name, department, description, open_position, 
-        keywords, total_reviewers, total_experience, total_hoursOutLab, 
-        total_hoursInLab, total_workload, total_communication, 
-        avg_experience, avg_hoursOutLab, avg_hoursInLab, 
+        keywords,  avg_experience, avg_hoursOutLab, avg_hoursInLab, 
         avg_workload, avg_communication} = req.body
 
     try{
         const lab = await Lab.create({name, department, description, open_position, 
-            keywords, total_reviewers, total_experience, total_hoursOutLab, 
-            total_hoursInLab, total_workload, total_communication, 
-            avg_experience, avg_hoursOutLab, avg_hoursInLab, 
+            keywords,  avg_experience, avg_hoursOutLab, avg_hoursInLab, 
             avg_workload, avg_communication} )
         return res.json(lab)
         
@@ -32,7 +29,7 @@ router.post('/lab', async(req,res) =>{
         return res.status(500).json(err)
     }
 })
-
+*/
 // Returns all labs
 router.get('/alllabs', async(req,res)=>{
     const errors = validationResult(req);
@@ -94,8 +91,8 @@ router.get('/labsshow', async(req,res)=>{
                 department:{[Op.startsWith]:department}, 
                 open_position,
                 avg_experience: {[Op.gte]:avg_experience},
-                avg_hoursInLab: {[Op.gte]:avg_hoursInLab},
-                avg_hoursOutLab: {[Op.gte]:avg_hoursOutLab},
+                avg_hoursInLab: {[Op.lte]:avg_hoursInLab},
+                avg_hoursOutLab: {[Op.lte]:avg_hoursOutLab},
                 avg_communication: {[Op.gte]:avg_communication},
                 avg_workload: {[Op.gte]:avg_workload}
             }
@@ -134,11 +131,11 @@ router.get('/labssearch', async(req,res)=>{
                 department:{[Op.startsWith]:department},
                 open_position,
                 avg_experience: {[Op.gte]:avg_experience},
-                avg_hoursInLab: {[Op.gte]:avg_hoursInLab},
-                avg_hoursOutLab: {[Op.gte]:avg_hoursOutLab},
+                avg_hoursInLab: {[Op.lte]:avg_hoursInLab},
+                avg_hoursOutLab: {[Op.lte]:avg_hoursOutLab},
                 avg_communication: {[Op.gte]:avg_communication},
                 avg_workload: {[Op.gte]:avg_workload},
-                [Op.or]:[{name:{[Op.substring]:term}},{keywords:{[Op.contains]:[term]}}]
+                [Op.or]:[{name:{[Op.substring]:term}},{keywords:{[Op.substring]:term}}]
 
             }
 

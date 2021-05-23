@@ -37,31 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN
     },
     keywords: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull:false
-    },
-    total_reviewers: {
-      type: DataTypes.INTEGER,
-      allowNull:false
-    },
-    total_experience: {
-      type: DataTypes.INTEGER,
-      allowNull:false
-    },
-    total_hoursOutLab: {
-      type: DataTypes.INTEGER,
-      allowNull:false
-    },
-    total_hoursInLab: {
-      type: DataTypes.INTEGER,
-      allowNull:false
-    },
-    total_workload: {
-      type: DataTypes.INTEGER,
-      allowNull:false
-    },
-    total_communication: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull:false
     },
     avg_experience: {
