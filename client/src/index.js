@@ -7,6 +7,14 @@ import Spinner from './components/Spinner';
 import reportWebVitals from './reportWebVitals';
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+    },
+    secondary: {
+      main: '#e6f4ff'
+    }
+  },
   typography: {
     fontFamily: [
       'Roboto',
