@@ -27,6 +27,7 @@ const useStyles = makeStyles({
   link: {
     marginLeft: 5,
     marginRight: 5,
+    color: 'black',
   },
   search: {
     flexGrow: 1,
@@ -62,10 +63,10 @@ const Navbar = () => {
       />
 
       <Typography className={classes.right}>
-        <Link className={classes.link} href='/about' color='inherit'>
+        <Link className={classes.link} href='/about'>
           About
         </Link>
-        <Link className={classes.link} href='/staff' color='inherit'>
+        <Link className={classes.link} href='/staff'>
           Staff
         </Link>
       </Typography>

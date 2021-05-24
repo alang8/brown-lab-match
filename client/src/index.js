@@ -25,6 +25,13 @@ const theme = createMuiTheme({
       '-apple-system',
     ].join(','),
   },
+  overrides: {
+    MuiLink: {
+      root: {
+        color: '#4183C4',
+      }
+    }
+  }
 })
 
 ReactDOM.render(
