@@ -4,9 +4,12 @@ const makePair = (name, value) => ({
 })
 
 export const DEPARTMENTS = [
+  makePair('Applied Math', 'APMA'),
   makePair('Computer Science', 'CSCI'),
-  makePair('Applied Math', 'APMA')
 ];
+
+const DEPARTMENTS_MAP = Object.fromEntries(DEPARTMENTS.map(({ name, value }) => [value, name]));
+export const departmentValueToName = value => DEPARTMENTS_MAP[value];
 
 export const RATINGS = [
   makePair('0-3', [0, 3]),

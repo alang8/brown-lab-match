@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DEPARTMENTS, LAB_SIZES, RATINGS, WORDLOADS } from '../../utils';
 import Filter from './Filter';
+import SearchResults from './SearchResults';
 
 const useStyles = makeStyles({
   root: {
@@ -31,6 +32,23 @@ const SearchPage = (props) => {
   const [labSize, setLabSize] = useState('');
   const [workload, setWorkload] = useState('');
 
+  // this is dummy data
+  const [data, setData] = useState([
+    { id: 0, department: 'APMA', name: 'Random APMA Lab', pi: [{ name: 'Alex Ding', url: 'https://www.github.com/alexander-ding' }, { name: 'Austin Lang', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 1, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Alex Ding', url: 'https://www.github.com/alexander-ding' }, { name: 'Austin Lang', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 2, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 3, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 4, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 5, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 6, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 7, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 8, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 9, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 10, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+    { id: 11, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+
+  ])
+
   const clearFilters = () => {
     setDepartment('');
     setRating('');
@@ -51,6 +69,7 @@ const SearchPage = (props) => {
 
       <Button className={classes.clearButton} variant='outlined' onClick={clearFilters}>Clear filters</Button>
     </Box>
+    <SearchResults data={data} />
   </Container>;
 }
 
