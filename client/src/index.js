@@ -7,6 +7,14 @@ import Spinner from './components/Spinner';
 import reportWebVitals from './reportWebVitals';
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+    },
+    secondary: {
+      main: '#e6f4ff'
+    }
+  },
   typography: {
     fontFamily: [
       'Roboto',
@@ -17,6 +25,13 @@ const theme = createMuiTheme({
       '-apple-system',
     ].join(','),
   },
+  overrides: {
+    MuiLink: {
+      root: {
+        color: '#4183C4',
+      }
+    }
+  }
 })
 
 ReactDOM.render(
