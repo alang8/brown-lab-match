@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Lab.init({
-    uuid:{
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+    uid:{
+      type: DataTypes.STRING,
+      allowNull:false
     },
     name: {
       type: DataTypes.STRING,
@@ -30,14 +30,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false
     },
     open_position: {
       type: DataTypes.BOOLEAN
     },
     keywords: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false
     },
     avg_experience: {
