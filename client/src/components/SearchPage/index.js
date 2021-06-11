@@ -1,7 +1,9 @@
 import { Box, Button, Container, makeStyles, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { DEPARTMENTS, LAB_SIZES, RATINGS, WORDLOADS } from '../../utils';
+import { applyFilters, DEPARTMENTS, LAB_SIZES, RATINGS, WORKLOADS } from '../../utils';
+import { getAllLabs, getQueryLabs } from '../../utils/API';
+import Spinner from '../Spinner';
 import Filter from './Filter';
 import SearchResults from './SearchResults';
 
@@ -32,28 +34,42 @@ const SearchPage = (props) => {
   const [labSize, setLabSize] = useState('');
   const [workload, setWorkload] = useState('');
 
-  // this is dummy data
-  const [data, setData] = useState([
-    { id: 0, department: 'APMA', name: 'Random APMA Lab', pi: [{ name: 'Alex Ding', url: 'https://www.github.com/alexander-ding' }, { name: 'Austin Lang', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 1, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Alex Ding', url: 'https://www.github.com/alexander-ding' }, { name: 'Austin Lang', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 2, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 3, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 4, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 5, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 6, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 7, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 8, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 9, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 10, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
-    { id: 11, department: 'CSCI', name: 'Brown Visual Computing', pi: [{ name: 'Daniel Ritchie', url: 'https://www.github.com/alexander-ding' }, { name: 'James Tompkin', url: 'https://www.github.com/alexander-ding' }], rating: 5.4, size: 12, workload: 20 },
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  ])
 
   const clearFilters = () => {
     setDepartment('');
     setRating('');
     setLabSize('');
     setWorkload('');
+  }
+
+  useEffect(() => {
+    if (showAll) {
+      setIsLoading(true);
+      getAllLabs().then(data => {
+        setIsLoading(false);
+        setData(data)
+      });
+    } else {
+      setIsLoading(true);
+      getQueryLabs(query).then(data => {
+        setIsLoading(false);
+        setData(data);
+      })
+    }
+  }, [query, showAll]);
+
+  const dataToRender = applyFilters(data, {
+    department,
+    rating,
+    labSize,
+    workload
+  })
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   return <Container className={classes.root}>
@@ -65,11 +81,10 @@ const SearchPage = (props) => {
       <Filter name='Department' data={DEPARTMENTS} value={department} setValue={setDepartment} />
       <Filter name='Rating' data={RATINGS} value={rating} setValue={setRating} />
       <Filter name='Lab size' data={LAB_SIZES} value={labSize} setValue={setLabSize} />
-      <Filter name='Workload' data={WORDLOADS} value={workload} setValue={setWorkload} />
-
+      <Filter name='Workload' data={WORKLOADS} value={workload} setValue={setWorkload} />
       <Button className={classes.clearButton} variant='outlined' onClick={clearFilters}>Clear filters</Button>
     </Box>
-    <SearchResults data={data} />
+    <SearchResults data={dataToRender} />
   </Container>;
 }
 

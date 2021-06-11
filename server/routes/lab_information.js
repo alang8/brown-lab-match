@@ -48,18 +48,18 @@ router.get('/alllabs', async(req,res)=>{
     }
 })
 
-// Returns lab with specific uuid
-router.get('/lab/:uuid', async(req,res)=>{
+// Returns lab with specific uid
+router.get('/lab/:uid', async(req,res)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res
             .status(StatusCodes.BAD_REQUEST)
             .json({ errors: errors.array() });
     }
-    const uuid = req.params.uuid
+    const uid = req.params.uid
     try{
         const lab = await Lab.findOne({
-            where: {uuid}
+            where: {uid}
         })
 
         return res.json(lab)

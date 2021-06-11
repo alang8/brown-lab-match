@@ -24,8 +24,31 @@ export const LAB_SIZES = [
   makePair('16+', [16])
 ];
 
-export const WORDLOADS = [
+export const WORKLOADS = [
   makePair('Low', [0, 3]),
   makePair('Medium', [3, 7]),
   makePair('High', [7, 10]),
 ];
+
+const isInRange = (value, range) => {
+  if (range.length === 2) {
+    return value >= range[0] && value <= range[1];
+  } else {
+    return value >= range[0];
+  }
+}
+
+const createFilter = (filters) => {
+  return (row) => {
+    if (filters.department !== '' && row.department !== filters.department) return false;
+    if (filters.rating !== '' && !isInRange(row.rating, filters.rating)) return false;
+    if (filters.labSize !== '' && !isInRange(row.size, filters.labSize)) return false;
+    if (filters.workload !== '' && !isInRange(row.totalHours, filters.workload)) return false;
+    return true;
+  }
+}
+
+export const applyFilters = (data, filters) => {
+  const filter = createFilter(filters);
+  return data.filter(filter);
+}
