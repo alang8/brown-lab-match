@@ -1,48 +1,103 @@
-import { Box, Button, Link, IconButton, TextField, Typography } from '@material-ui/core';
-import React from 'react';
+import { Box, Button, Container, IconButton, Link, makeStyles, Typography } from '@material-ui/core';
+import SearchBar from 'material-ui-search-bar';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Logo from './Logo';
 
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  navbar: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  body: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexGrow: 1,
+  },
+  bodyText: {
+    textAlign: 'center',
+    marginTop: '10vh',
+  },
+  link: {
+    marginLeft: 5,
+    marginRight: 5,
+    color: 'black',
+  },
+  right: {
+    marginLeft: 'auto',
+    marginRight: 20,
+    marginTop: 20,
+  },
+  search: {
+    marginTop: 30,
+    width: '50%',
+  },
+  buttons: {
+    marginTop: 15,
+  },
+  button: {
+    width: 150,
+    margin: '0 5px',
+  }
+})
+
 const HomePage = () => {
-  return <Box id="main">
-    <Box id="bar" display="flex" alignItems="center" width="100%">
-      <Box id="logo">
-        <IconButton href='/' align="left">
-          <Logo size={75} />
-        </IconButton>
-      </Box>      
-      
-      <Box id="link1" padding="15px" paddingLeft={150} align="right">
-        <Typography variant='h6' align="right">
-          <Link href='https://www.fullstackatbrown.com/' target='_blank' rel='noopener'>About</Link>
-        </Typography>
+  const [searchValue, setSearchValue] = useState('');
+  const classes = useStyles();
+  const history = useHistory();
+
+  const handleSearch = (value) => {
+    if (value) {
+      history.push('/search/' + value);
+    }
+  }
+
+  return <Box className={classes.root}>
+    <Box className={classes.navbar}>
+      <IconButton href='/' align='left'>
+        <Logo size={75} />
+      </IconButton>
+
+      <Typography className={classes.right}>
+        <Link className={classes.link} href='/submit'>
+          Submit Review
+        </Link>
+        <Link className={classes.link} href='/about'>
+          About
+        </Link>
+        <Link className={classes.link} href='/staff'>
+          Staff
+        </Link>
+      </Typography>
+    </Box>
+
+    <Container className={classes.body}>
+      <Box className={classes.bodyText}>
+        <Typography variant='h3' component='h1'><b>Brown Lab Review</b></Typography>
+        <Typography variant='h5'>Helping Brown Students Navigate the Labs Since 2021</Typography>
       </Box>
 
-      <Box id="link2" padding="15px" align="right">
-        <Typography variant='h6' align="right">
-          <Link href='https://www.brown.edu/' target='_blank' rel='noopener'>Help</Link>
-        </Typography>
+      <SearchBar
+        className={classes.search}
+        value={searchValue}
+        onChange={setSearchValue}
+        onRequestSearch={() => handleSearch(searchValue)}
+        onCancelSearch={() => setSearchValue('')}
+        cancelOnEscape
+        placeholder='Search by name, department, professor, or research area'
+      />
+
+      <Box className={classes.buttons}>
+        <Button className={classes.button} variant='outlined' size='large' color='primary' onClick={() => handleSearch(searchValue)}>Search</Button>
+        <Button className={classes.button} variant='outlined' size='large' color='primary' href='/search'>Browse Labs</Button>
       </Box>
-      
-      <Box id="link3" padding="15px" align="right">
-        <Typography variant='h6' align="right">
-          <Link href='https://www.facebook.com/BrownResearchClub/' target='_blank' rel='noopener'>Staff</Link>
-        </Typography>
-      </Box>
-    </Box>
-
-    <Box id="text" position="relative" top={75} align="center">
-      <Typography variant="h3"><b>Brown Lab Review</b></Typography>
-      <Typography variant="h5">Helping Brown Students Navigate the Labs Since 2021</Typography>
-    </Box>
-
-    <Box id="search" position="relative" top={80} padding="5px" align="center">
-      <TextField id="filled-basic" label="Search by name, department, professor, or research area" variant="filled" style ={{width: '50%'}}/>
-    </Box>
-
-    <Box id="buttons" position="relative" top={85} padding="5px" align="center">
-      <Button variant="outlined" size="large" style={{width: '150px'}} color="primary">Search</Button>
-      <Button variant="outlined" size="large" style={{width: '150px', marginLeft: '10px'}} color="primary">Browse Labs</Button>
-    </Box>
+    </Container>
   </Box>
 }
 
