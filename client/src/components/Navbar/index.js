@@ -59,6 +59,8 @@ const Navbar = () => {
         value={searchValue}
         onChange={setSearchValue}
         onRequestSearch={() => handleSearch(searchValue)}
+        onCancelSearch={() => setSearchValue('')}
+        cancelOnEscape
         placeholder='Search by name, department, professor, or research area'
       />
 
