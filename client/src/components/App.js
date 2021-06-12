@@ -31,7 +31,7 @@ function App() {
           <Navbar />
           <Container className={classes.body}>
             <Switch>
-              <Route path='/lab/:id'><LabPage /></Route>
+              <Route path='/labs/:id'><LabPage /></Route>
               <Route path='/search/' exact><SearchPage showAll /></Route>
               <Route path='/search/:query'><SearchPage /></Route>
               <Route path='*'><NotFoundPage /></Route>
