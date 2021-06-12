@@ -1,4 +1,5 @@
-import { Box, Button, Container, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { applyFilters, DEPARTMENTS, LAB_SIZES, RATINGS, WORKLOADS } from '../../utils';
@@ -15,6 +16,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-end',
+    flexWrap: 'wrap',
   },
   filtersText: {
     marginRight: 10,
@@ -22,7 +24,9 @@ const useStyles = makeStyles({
   clearButton: {
     marginLeft: 'auto',
   },
-
+  alert: {
+    marginTop: 10,
+  }
 })
 
 const SearchPage = (props) => {
@@ -36,7 +40,7 @@ const SearchPage = (props) => {
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [error, setError] = useState('');
 
   const clearFilters = () => {
     setDepartment('');
@@ -50,14 +54,22 @@ const SearchPage = (props) => {
       setIsLoading(true);
       getAllLabs().then(data => {
         setIsLoading(false);
-        setData(data)
+        setError('');
+        setData(data);
+      }).catch(e => {
+        setIsLoading(false);
+        setError(e.toString());
       });
     } else {
       setIsLoading(true);
       getQueryLabs(query).then(data => {
         setIsLoading(false);
+        setError('');
         setData(data);
-      })
+      }).catch(e => {
+        setIsLoading(false);
+        setError(e.toString());
+      });
     }
   }, [query, showAll]);
 
@@ -66,26 +78,31 @@ const SearchPage = (props) => {
     rating,
     labSize,
     workload
-  })
+  });
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
-  return <Container className={classes.root}>
+  return <Box className={classes.root}>
     <Typography variant='h4' component='h1'>
       {showAll ? 'All labs' : `Results for "${query}"`}
     </Typography>
-    <Box className={classes.filters}>
-      <Typography className={classes.filtersText} variant='h6' component='span'>Filter by:</Typography>
-      <Filter name='Department' data={DEPARTMENTS} value={department} setValue={setDepartment} />
-      <Filter name='Rating' data={RATINGS} value={rating} setValue={setRating} />
-      <Filter name='Lab size' data={LAB_SIZES} value={labSize} setValue={setLabSize} />
-      <Filter name='Workload' data={WORKLOADS} value={workload} setValue={setWorkload} />
-      <Button className={classes.clearButton} variant='outlined' onClick={clearFilters}>Clear filters</Button>
-    </Box>
-    <SearchResults data={dataToRender} />
-  </Container>;
+    {error ? <Alert severity='error' className={classes.alert}>{error}</Alert> :
+      <Box>
+        <Box className={classes.filters}>
+          <Typography className={classes.filtersText} variant='h6' component='span'>Filter by:</Typography>
+          <Filter name='Department' data={DEPARTMENTS} value={department} setValue={setDepartment} />
+          <Filter name='Rating' data={RATINGS} value={rating} setValue={setRating} />
+          <Filter name='Lab size' data={LAB_SIZES} value={labSize} setValue={setLabSize} />
+          <Filter name='Workload' data={WORKLOADS} value={workload} setValue={setWorkload} />
+          <Button className={classes.clearButton} variant='outlined' onClick={clearFilters}>Clear filters</Button>
+        </Box>
+        <SearchResults data={dataToRender} />
+      </Box>
+    }
+
+  </Box>;
 }
 
 export default SearchPage;

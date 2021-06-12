@@ -9,7 +9,7 @@ export const DEPARTMENTS = [
 ];
 
 const DEPARTMENTS_MAP = Object.fromEntries(DEPARTMENTS.map(({ name, value }) => [value, name]));
-export const departmentValueToName = value => DEPARTMENTS_MAP[value];
+export const departmentValueToName = value => DEPARTMENTS_MAP[value] ? DEPARTMENTS_MAP[value] : 'Unknown Department';
 
 export const RATINGS = [
   makePair('0-3', [0, 3]),

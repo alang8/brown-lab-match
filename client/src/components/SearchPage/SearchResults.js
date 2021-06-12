@@ -9,12 +9,12 @@ const columns = [
   {
     field: 'pis', headerName: 'Principle Investigators', width: 300, valueGetter: (params) => params.row.pis.map(v => v.name).join(', '), renderCell: params => <Typography key={params.row.id}>
       {params.row.pis.map((pi, index) =>
-        <>
-          <Link key={index} href={pi.url} target='_blank' rel='noopener'>{pi.name}</Link>
+        <React.Fragment key={index} >
+          <Link href={pi.url} target='_blank' rel='noopener'>{pi.name}</Link>
           {index !== (params.row.pis.length - 1) ? ', ' : ''}
-        </>
+        </React.Fragment>
       )}
-    </Typography>
+    </Typography >
   },
   { field: 'rating', headerName: 'Rating', width: 100, type: 'number' },
   { field: 'size', headerName: 'Size', width: 100, type: 'number' },

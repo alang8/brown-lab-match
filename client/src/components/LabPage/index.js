@@ -1,39 +1,174 @@
-import { Box } from '@material-ui/core';
+import { Box, Link, makeStyles, Typography } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { departmentValueToName } from '../../utils';
+import { getLab } from '../../utils/API';
+import NotFoundPage from '../NotFoundPage';
+import Spinner from '../Spinner';
+import OpenPosition from './OpenPosition';
+import Statistics from './Statistics';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap-reverse',
+    },
+  },
+  body: {
+    flexGrow: 1,
+  },
+  floatRight: {
+    [theme.breakpoints.up('md')]: {
+      position: 'sticky',
+      top: 10,
+      minWidth: 250,
+      width: 250,
+      marginLeft: 10,
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
+  name: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  header: {
+    textDecoration: 'underline',
+    fontWeight: 'bold',
+    marginTop: 12,
+    marginBottom: 10,
+  },
+  synopsis: {
+    marginTop: 10,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  url: {
+    marginLeft: 10,
+    lineHeight: 2,
+  },
+  link: {
+    fontWeight: 'bold',
+  },
+  publication: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    backgroundColor: 'black',
+    borderRadius: '50%',
+    display: 'inline-block',
+    marginLeft: 2,
+    marginRight: 5,
+  },
+}));
 
 const LabPage = () => {
   const { id } = useParams();
-  const [data, setData] = useState(null);
-  const [status, setStatus] = useState('loading');
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const classes = useStyles();
 
   useEffect(() => {
-    setStatus('loading');
-    // do API request here
-    setTimeout(() => {
-      setStatus('loaded');
-      setData({
-        department: 'APMA',
-        name: 'Random APMA Lab',
-        pi: [{ name: 'Alex Ding', url: 'https://www.github.com/alexander-ding' }, { name: 'Austin Lang', url: 'https://www.github.com/alexander-ding' }],
-        rating: 5.4,
-        size: 12,
-        workload: 20,
-        description: 'The Brown Visual Computing group develops technology to make and make sense of visual data. They leverage both principled physical models and data-driven methods to synthesize, edit, and explain visual data.\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        open_position: true,
-        keywords: 'computer graphics, machine learning, computer vision',
-        avg_experience: 7.5,
-        avg_hoursInLab: 5.6,
-        avg_hoursOutLab: 3,
-        avg_workload: 8.6,
-        avg_communication: 5.0,
-      })
-    }, 50)
+    setIsLoading(true);
+    getLab(id).then(data => {
+      setData(data);
+      setError('');
+      setIsLoading(false);
+    }).catch(e => {
+      setIsLoading(false);
+      setError(e.toString());
+    });
+  }, [id]);
 
-  }, [id])
+  if (isLoading) {
+    return <Spinner />;
+  }
 
-  return <Box>
-    Lab page {id}
+  if (error) {
+    <Box className={classes.root}>
+      <Alert severity='error'>{error}</Alert>
+    </Box>
+  }
+
+  if (!data) {
+    return <NotFoundPage />;
+  }
+  console.log(isLoading)
+  console.log(data)
+  return <Box className={classes.root}>
+    <Box className={classes.body}>
+      <Box className={classes.name}>
+        <Typography variant='h3' component='h1'>{data.name}{data.website ? <> <Typography variant='h5' component='span'>[<Link href={data.website}>Website</Link>]</Typography></> : null}</Typography>
+      </Box>
+      <Box className={classes.synopsis}>
+        <Typography variant='body1' component='span'>
+          {departmentValueToName(data.department)} |&nbsp;
+          {data.pis.map((pi, index) =>
+            <React.Fragment key={index}>
+              <Link href={pi.url} className={classes.link}>{pi.name}</Link>{index !== (data.pis.length - 1) ? ', ' : null}
+            </React.Fragment>
+          )}
+        </Typography>
+        <Typography variant='body1' component='span'>
+          Keywords:&nbsp;
+          {data.keywords.map((keyword, index) =>
+          <React.Fragment key={index}>
+            <Link href={`/search/${keyword}`} className={classes.link}>{keyword}</Link>{index !== (data.keywords.length - 1) ? ', ' : null}
+          </React.Fragment>
+        )}
+        </Typography>
+      </Box>
+      <Box>
+        <Typography className={classes.header} variant='h5'>
+          Summary
+        </Typography>
+        <Typography variant='body1'>
+          {data.description}
+          {data.description}
+          {data.description}
+          {data.description}
+        </Typography>
+      </Box>
+      <Box>
+        <Typography className={classes.header} variant='h5'>
+          Select Publications
+        </Typography>
+        <Box>
+          {data.publications.map((publication, index) => <Box className={classes.publication} key={index}>
+            <Typography className={classes.dot} as='span' />
+            <Typography>
+              <Link href={publication.url}>{publication.name}</Link>
+            </Typography>
+          </Box>)}
+        </Box>
+      </Box>
+      {data.gettingStarted ?
+        <Box id='getting-started'>
+          <Typography className={classes.header} variant='h5'>
+            Getting Involved
+          </Typography>
+          <Box>
+            {data.gettingStarted}
+          </Box>
+        </Box> : null
+      }
+    </Box>
+    <Box className={classes.floatRight}>
+      <Statistics data={data} />
+      <OpenPosition isOpen={data.isOpenPosition} />
+    </Box>
   </Box>;
 }
 
