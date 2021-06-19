@@ -2,7 +2,6 @@ import { Box, Link, makeStyles, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { departmentValueToName } from '../../utils';
 import { getLab } from '../../utils/API';
 import NotFoundPage from '../NotFoundPage';
 import Spinner from '../Spinner';
@@ -105,8 +104,7 @@ const LabPage = () => {
   if (!data) {
     return <NotFoundPage />;
   }
-  console.log(isLoading)
-  console.log(data)
+
   return <Box className={classes.root}>
     <Box className={classes.body}>
       <Box className={classes.name}>
@@ -114,7 +112,7 @@ const LabPage = () => {
       </Box>
       <Box className={classes.synopsis}>
         <Typography variant='body1' component='span'>
-          {departmentValueToName(data.department)} |&nbsp;
+          {data.department.join(', ')} |&nbsp;
           {data.pis.map((pi, index) =>
             <React.Fragment key={index}>
               <Link href={pi.url} className={classes.link}>{pi.name}</Link>{index !== (data.pis.length - 1) ? ', ' : null}
@@ -124,10 +122,10 @@ const LabPage = () => {
         <Typography variant='body1' component='span'>
           Keywords:&nbsp;
           {data.keywords.map((keyword, index) =>
-          <React.Fragment key={index}>
-            <Link href={`/search/${keyword}`} className={classes.link}>{keyword}</Link>{index !== (data.keywords.length - 1) ? ', ' : null}
-          </React.Fragment>
-        )}
+            <React.Fragment key={index}>
+              <Link href={`/search/${keyword}`} className={classes.link}>{keyword}</Link>{index !== (data.keywords.length - 1) ? ', ' : null}
+            </React.Fragment>
+          )}
         </Typography>
       </Box>
       <Box>

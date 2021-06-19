@@ -1,6 +1,6 @@
 const BASE_URL = 'https://api.airtable.com/v0/appe5NHBu3T33LXwf/'
 
-const API_KEY = process.env.REACT_APP_API_KEY
+const API_KEY = 'key4YRIitkLvoTW3l' // process.env.REACT_APP_API_KEY
 /*
 const parseLinks = (s) => {
   return s.split(', ').map(substr => {
@@ -23,6 +23,8 @@ const parseDatum = (datum) => ({
   id: datum.id,
   // ome of these are blank, not sure if it will cause error.
   autonomy: datum.fields['avg_autonomy'],
+  communicationPI: datum.fields['avg_communicationPI'],
+  communicationMentor: datum.fields['avg_communicationMentor'],
   communication: (datum.fields['avg_communicationPI'] + datum.fields['avg_communicationMentor']) / 2,
   // this is just the professor's email now, maybe we should add some general text here for all labs
   gettingStarted: datum.fields['getting_started'],
@@ -44,7 +46,7 @@ const parseDatum = (datum) => ({
   // this is a string like 1-5 now, not sure how we want to deal with it
   size: datum.fields['total_lab_members'],
   // this is also a string like 1-5 now
-  totalHours: datum.fields['avg_hoursInLab'] + datum.fields['avg_hoursOutLab'],
+  totalHours: datum.fields['avg_hoursInLab']// + datum.fields['avg_hoursOutLab'],
 })
 
 const parseData = (data) => {
