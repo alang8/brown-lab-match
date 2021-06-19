@@ -1,10 +1,9 @@
 import { Box, Link, makeStyles, Typography } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
 import React from 'react';
-import { departmentValueToName } from '../../utils';
 
 const columns = [
-  { field: 'different', headerName: 'Department', width: 200, valueGetter: (params) => departmentValueToName(params.row.department) },
+  { field: 'department', headerName: 'Department', width: 200, valueGetter: (params) => params.row.department.join(', ') },
   { field: 'name', headerName: 'Name', width: 250, renderCell: params => <Link href={`/labs/${params.row.id}`}>{params.row.name}</Link> },
   {
     field: 'pis', headerName: 'Principle Investigators', width: 300, valueGetter: (params) => params.row.pis.map(v => v.name).join(', '), renderCell: params => <Typography key={params.row.id}>

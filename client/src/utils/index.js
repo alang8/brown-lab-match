@@ -4,12 +4,10 @@ const makePair = (name, value) => ({
 })
 
 export const DEPARTMENTS = [
-  makePair('Applied Math', 'APMA'),
-  makePair('Computer Science', 'CSCI'),
+  makePair('Applied Math', 'Applied Math'),
+  makePair('Computer Science', 'Computer Science'),
 ];
 
-const DEPARTMENTS_MAP = Object.fromEntries(DEPARTMENTS.map(({ name, value }) => [value, name]));
-export const departmentValueToName = value => DEPARTMENTS_MAP[value] ? DEPARTMENTS_MAP[value] : 'Unknown Department';
 
 export const RATINGS = [
   makePair('0-3', [0, 3]),
@@ -18,16 +16,17 @@ export const RATINGS = [
 ]
 
 export const LAB_SIZES = [
-  makePair('1-5', [1, 5]),
-  makePair('6-10', [6, 10]),
-  makePair('11-15', [11, 15]),
-  makePair('16+', [16])
+  makePair('1-5', '1-5'),
+  makePair('5-10', '5-10'),
+  makePair('10-15', '10-15'),
+  makePair('15+', '15+')
 ];
 
 export const WORKLOADS = [
-  makePair('Low', [0, 3]),
-  makePair('Medium', [3, 7]),
-  makePair('High', [7, 10]),
+  makePair('0-5', '0-5'),
+  makePair('5-10', '5-10'),
+  makePair('10-15', '10-15'),
+  makePair('15+', '15+')
 ];
 
 const isInRange = (value, range) => {
@@ -40,10 +39,10 @@ const isInRange = (value, range) => {
 
 const createFilter = (filters) => {
   return (row) => {
-    if (filters.department !== '' && row.department !== filters.department) return false;
+    if (filters.department !== '' && !filters.department.includes(row.department)) return false;
     if (filters.rating !== '' && !isInRange(row.rating, filters.rating)) return false;
-    if (filters.labSize !== '' && !isInRange(row.size, filters.labSize)) return false;
-    if (filters.workload !== '' && !isInRange(row.totalHours, filters.workload)) return false;
+    if (filters.labSize !== '' && row.size !== filters.labSize) return false;
+    if (filters.workload !== '' && row.totalHours !== filters.workload) return false;
     return true;
   }
 }
@@ -51,4 +50,13 @@ const createFilter = (filters) => {
 export const applyFilters = (data, filters) => {
   const filter = createFilter(filters);
   return data.filter(filter);
+}
+
+export const pickHex = (color1, color2, weight) => {
+  const w1 = weight;
+  const w2 = 1 - w1;
+  const rgb = [Math.round(color1[0] * w1 + color2[0] * w2),
+  Math.round(color1[1] * w1 + color2[1] * w2),
+  Math.round(color1[2] * w1 + color2[2] * w2)];
+  return rgb;
 }

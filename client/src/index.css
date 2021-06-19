@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.react-sweet-progress-symbol {
+  display: none !important;
+}
+
+.react-sweet-progress-line {
+  border-radius: 5px !important;
+}
+
+.react-sweet-progress-line-inner {
+  min-height: 25px !important;
+  border-radius: 5px !important;
+}
