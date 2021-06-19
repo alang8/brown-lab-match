@@ -1,10 +1,15 @@
-import { Box } from '@material-ui/core';
+import { Box, CircularProgress, makeStyles } from '@material-ui/core';
 import React from 'react';
 
+const useStyles = makeStyles({
+  root: {
+    margin: 'auto',
+  }
+})
+
 const Spinner = () => {
-  return <Box>
-    Loading...
-  </Box>;
+  const classes = useStyles();
+  return <Box className={classes.root}><CircularProgress /></Box>;
 }
 
 export default Spinner;

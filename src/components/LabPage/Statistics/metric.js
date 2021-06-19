@@ -38,7 +38,7 @@ const Metric = ({ name, value, showBar, single }) => {
     {showBar ? <Progress className={single ? classes.singleBar : classes.bar} percent={percent * 100} theme={{
       active: {
         symbol: ' ',
-        color: 'rgb(' + pickHex([0, 240, 130], [240, 100, 100], percent).join(',') + ')',
+        color: 'rgb(' + pickHex([0, 255, 0], [255, 0, 0], percent).join(',') + ')',
       },
     }} status='active' /> : null}
     <Typography variant='h5' className={classes.value}>
