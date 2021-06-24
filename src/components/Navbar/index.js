@@ -69,9 +69,6 @@ const Navbar = () => {
         <Link className={classes.link} href='/about'>
           About
         </Link>
-        <Link className={classes.link} href='/staff'>
-          Staff
-        </Link>
       </Typography>
     </Toolbar>
   </AppBar>

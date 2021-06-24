@@ -65,21 +65,18 @@ const HomePage = () => {
       </IconButton>
 
       <Typography className={classes.right}>
-        <Link className={classes.link} href='/submit'>
+        <Link className={classes.link} rel='noopener noreferrer' target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScx6i614_CpAoFKJcKzKHFFAhgtgd75j89gW34iThVIpCdFRg/viewform'>
           Submit Review
         </Link>
         <Link className={classes.link} href='/about'>
           About
-        </Link>
-        <Link className={classes.link} href='/staff'>
-          Staff
         </Link>
       </Typography>
     </Box>
 
     <Container className={classes.body}>
       <Box className={classes.bodyText}>
-        <Typography variant='h3' component='h1'><b>Brown Lab Review</b></Typography>
+        <Typography variant='h3' component='h1'><b>Brown Lab Match</b></Typography>
         <Typography variant='h5'>Helping Brown Students Navigate the Labs Since 2021</Typography>
       </Box>
 
@@ -98,7 +95,7 @@ const HomePage = () => {
         <Button className={classes.button} variant='outlined' size='large' color='primary' href='/search'>Browse Labs</Button>
       </Box>
     </Container>
-  </Box>
+  </Box >
 }
 
 export default HomePage;

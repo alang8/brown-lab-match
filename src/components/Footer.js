@@ -18,10 +18,10 @@ const Footer = () => {
   const classes = useStyles();
   return <Box className={classes.root}>
     <Typography variant='caption'>
-      Run by <Link href='https://www.facebook.com/BrownResearchClub/' target='_blank' rel='noopener'>Brown Research Club</Link>. Developed by <Link href='https://www.fullstackatbrown.com/' target='_blank' rel='noopener'>FullStack@Brown</Link>
+      Run by <Link href='https://brownresearchclub.weebly.com/' rel='noopener noreferrer' target='_blank'>Brown Research Club</Link>. Developed by <Link href='https://www.fullstackatbrown.com/' rel='noopener noreferrer' target='_blank'>FullStack@Brown</Link>
     </Typography>
     <Typography variant='caption'>
-      Notice an issue on this site? <Link href='https://github.com/FullStackAtBrownTeam/project-lab/issues' target='_blank' rel='noopener'>Help us improve</Link>
+      Notice an issue on this site? <Link href='https://github.com/FullStackAtBrownTeam/project-lab/issues' rel='noopener noreferrer' target='_blank'>Help us improve</Link>
     </Typography>
   </Box>
 }

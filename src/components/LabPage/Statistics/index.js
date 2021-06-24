@@ -40,7 +40,7 @@ const Statistics = ({ data }) => {
           <Metric name='PI Communication' value={data.communicationPI} showBar />
         </Grid>
         <Grid item xs={6}>
-          <Metric name='Autonomy' value={data.autonomy} showBar />
+          {data.autonomy ? <Metric name='Autonomy' value={data.autonomy} showBar /> : null}
         </Grid>
         <Grid item xs={6}>
           <Metric name='Integration' value={data.communication} showBar />

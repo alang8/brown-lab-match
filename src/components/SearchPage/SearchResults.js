@@ -9,7 +9,7 @@ const columns = [
     field: 'pis', headerName: 'Principle Investigators', width: 300, valueGetter: (params) => params.row.pis.map(v => v.name).join(', '), renderCell: params => <Typography key={params.row.id}>
       {params.row.pis.map((pi, index) =>
         <React.Fragment key={index} >
-          <Link href={pi.url} target='_blank' rel='noopener'>{pi.name}</Link>
+          <Link href={pi.url} rel='noopener noreferrer' target='_blank'>{pi.name}</Link>
           {index !== (params.row.pis.length - 1) ? ', ' : ''}
         </React.Fragment>
       )}

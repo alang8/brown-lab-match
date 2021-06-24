@@ -108,14 +108,18 @@ const LabPage = () => {
   return <Box className={classes.root}>
     <Box className={classes.body}>
       <Box className={classes.name}>
-        <Typography variant='h3' component='h1'>{data.name}{data.website ? <> <Typography variant='h5' component='span'>[<Link href={data.website}>Website</Link>]</Typography></> : null}</Typography>
+        <Typography variant='h3' component='h1'>
+          {data.name}
+          {data.website ? <> <Typography variant='h5' component='span'>[<Link href={data.website} rel='noopener noreferrer' target='_blank'>Website</Link>]</Typography></> : null}
+          &nbsp;<Typography variant='h5' component='span'>[<Link href={data.publications} rel='noopener noreferrer' target='_blank'>Publications</Link>]</Typography>
+        </Typography>
       </Box>
       <Box className={classes.synopsis}>
         <Typography variant='body1' component='span'>
           {data.department.join(', ')} |&nbsp;
           {data.pis.map((pi, index) =>
             <React.Fragment key={index}>
-              <Link href={pi.url} className={classes.link}>{pi.name}</Link>{index !== (data.pis.length - 1) ? ', ' : null}
+              <Link href={pi.url} className={classes.link} rel='noopener noreferrer' target='_blank'>{pi.name}</Link>{index !== (data.pis.length - 1) ? ', ' : null}
             </React.Fragment>
           )}
         </Typography>
@@ -139,26 +143,13 @@ const LabPage = () => {
           {data.description}
         </Typography>
       </Box>
-      <Box>
-        <Typography className={classes.header} variant='h5'>
-          Select Publications
-        </Typography>
-        <Box>
-          {data.publications.map((publication, index) => <Box className={classes.publication} key={index}>
-            <Typography className={classes.dot} as='span' />
-            <Typography>
-              <Link href={publication.url}>{publication.name}</Link>
-            </Typography>
-          </Box>)}
-        </Box>
-      </Box>
       {data.gettingStarted ?
         <Box id='getting-started'>
           <Typography className={classes.header} variant='h5'>
             Getting Involved
           </Typography>
           <Box>
-            {data.gettingStarted}
+            Email <Link href={`mailto:${data.gettingStarted}`} rel='noopener noreferrer' target='_blank'>{data.pis[0].name}</Link> to get involved!
           </Box>
         </Box> : null
       }

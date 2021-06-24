@@ -3,6 +3,7 @@ import React, { lazy } from 'react';
 import {
   Route, Switch
 } from 'react-router-dom';
+import AboutPage from './AboutPage';
 import Footer from './Footer';
 const SearchPage = lazy(() => import('./SearchPage'));
 const HomePage = lazy(() => import('./HomePage'));
@@ -34,6 +35,7 @@ function App() {
           <Navbar />
           <Container className={classes.body}>
             <Switch>
+              <Route path='/about'><AboutPage /></Route>
               <Route path='/labs/:id'><LabPage /></Route>
               <Route path='/search/' exact><SearchPage showAll /></Route>
               <Route path='/search/:query'><SearchPage /></Route>

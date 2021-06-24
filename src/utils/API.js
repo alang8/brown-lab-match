@@ -31,15 +31,10 @@ const parseDatum = (datum) => ({
   integration: datum.fields['avg_integration'],
   // this field got deleted when the club entered data, we can discuss what to do with this.
   isOpenPosition: datum.fields['open_position'],
-  // this is just one link to publications on vivo now, the old parsing is no longer needed
-  publications: [{
-    name: datum.fields.publications,
-    url: 'https://www.google.com'
-  }],
   // all of them have one professor only and its a string.
   pis: [{
     name: datum.fields.professor,
-    url: 'https://www.google.com'
+    url: datum.fields.publications
   }],
   keywords: datum.fields.keywords,
   rating: datum.fields['avg_overall'],
