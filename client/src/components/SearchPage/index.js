@@ -2,7 +2,7 @@ import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { applyFilters, DEPARTMENTS, LAB_SIZES, RATINGS, WORKLOADS } from '../../utils';
+import { applyFilters, getDepartments, LAB_SIZES, RATINGS, WORKLOADS } from '../../utils';
 import { getAllLabs, getQueryLabs } from '../../utils/API';
 import Spinner from '../Spinner';
 import Filter from './Filter';
@@ -83,7 +83,6 @@ const SearchPage = (props) => {
   if (isLoading) {
     return <Spinner />;
   }
-
   return <Box className={classes.root}>
     <Typography variant='h4' component='h1'>
       {showAll ? 'All labs' : `Results for "${query}"`}
@@ -92,7 +91,7 @@ const SearchPage = (props) => {
       <Box>
         <Box className={classes.filters}>
           <Typography className={classes.filtersText} variant='h6' component='span'>Filter by:</Typography>
-          <Filter name='Department' data={DEPARTMENTS} value={department} setValue={setDepartment} />
+          <Filter name='Department' data={getDepartments(data)} value={department} setValue={setDepartment} />
           <Filter name='Rating' data={RATINGS} value={rating} setValue={setRating} />
           <Filter name='Lab size' data={LAB_SIZES} value={labSize} setValue={setLabSize} />
           <Filter name='Workload' data={WORKLOADS} value={workload} setValue={setWorkload} />

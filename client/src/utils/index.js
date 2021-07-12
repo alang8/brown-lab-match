@@ -3,10 +3,93 @@ const makePair = (name, value) => ({
   value
 })
 
-export const DEPARTMENTS = [
-  makePair('Applied Math', 'Applied Math'),
-  makePair('Computer Science', 'Computer Science'),
+const DEPARTMENTS = [
+  makePair('Africana Studies', 'AFRI'),
+  makePair('American Studies', 'AMST'),
+  makePair('Anthropology', 'ANTH'),
+  makePair('Applied Mathematics', 'APMA'),
+  makePair('Archaeology and Ancient World', 'ARCH'),
+  makePair('Bio-Med (PLME)', 'PLME'),
+  makePair('Biology', 'BIOL'),
+  makePair('Brown Arts Institute', 'ARTS'),
+  makePair('Business, Entrepreneurship, and Organization', 'BEO'),
+  makePair('Center for Language Studies', ['ARAB', 'EINT', 'HNDI', 'NAHU', 'PRSN', 'SIGN', 'TKSH', 'YORU']),
+  makePair('Chemistry', 'CHEM'),
+  makePair('Classics', 'CLAS'),
+  makePair('Cognitive, Linguistic, and Psychological Sciences', 'CLPS'),
+  makePair('Cogut Center for Humanities', 'HMAN'),
+  makePair('Comparative Literature', 'COLT'),
+  makePair('Computer Science', 'CSCI'),
+  // center for contemporary south asia
+  // development studies
+  // earth cultures
+  makePair('Earth, Environment, and Planetary Science', 'DEEPS'),
+  makePair('East Asian Studies', ['CHIN', 'EAST', 'JAPN', 'KREA']),
+  makePair('Economics', 'ECON'),
+  makePair('Education', 'EDUC'),
+  makePair('Egyptology and Assyriology', 'ASYR'),
+  makePair('Engineering', 'ENGN'),
+  makePair('English', 'ENGL'),
+  makePair('French Studies', 'FREN'),
+  makePair('German Studies', 'GRMN'),
+  makePair('Hispanic Studies', 'HISP'),
+  makePair('History', 'HIST'),
+  makePair('History of Art and Architecture', 'HIAA'),
+  makePair('Institute at Brown for Environment and Society', 'ENVS'),
+  makePair('Italian Studies', 'ITAL'),
+  makePair('Judaic Studies', 'JUDS'),
+  makePair('Latin American and Caribbean Study', 'LACA'),
+  makePair('Literary Arts', 'LITR'),
+  makePair('Mathematics', 'MATH'),
+  makePair('Medieval Studies', 'MDVL'),
+  makePair('Middle East Studies', 'MES'),
+  makePair('Modern Culture and Media', 'MCM'),
+  makePair('Music', 'MUSC'),
+  makePair('Neuroscience', 'NEUR'),
+  makePair('Pembroke Center for Teaching and Research', 'GNSS'),
+  makePair('Philosophy', 'PHIL'),
+  makePair('Physics', 'PHYS'),
+  makePair('Political Science', 'POLS'),
+  makePair('Portuguese and Brazilian Studies', 'POBS'),
+  makePair('Public Health', 'PHP'),
+  makePair('Religious Studies', ['RELS', 'COST']),
+  makePair('Renaissance and Studies', 'EMOW'),
+  makePair('Slavic Studies', ['CZCH', 'PLSH', 'RUSS', 'SLAV']),
+  makePair('Sociology', 'SOC'),
+  makePair('Theatre Arts and Performance Studies', 'TAPS'),
+  makePair('Urban Studies', 'URBN'),
+  makePair('Visual Art', 'VISA'),
+  makePair('Watson Institute for International and Public Affairs', 'IAPA'),
+
+  // graduate school departments
+  makePair('Behavioral and Social Sciences', 'BSS'),
+  makePair('Molecular Biology, Cell Biology, and Biochemistry', 'MCB'),
+  makePair('Alpert Medical School', 'Alpert Medical School'),
+  makePair('Psychiatry', 'Psychiatry'),
+  makePair('Pediatrics', 'Pediatrics'),
+  makePair('Biomedical Engineering', 'BME'),
+  makePair('Ecology, Evolution, and Organismal Biology', 'EEB'),
+  makePair('Center for the Study of Slavery and Justice', 'CSSJ'),
+  makePair('Molecular Pharmacology, Physiology and Biotechnology', 'MPPB'),
+  makePair('Molecular Microbiology and Immunology', 'MMI'),
+  makePair('Rhode Island Hospital', 'RIH'),
 ];
+const REVERSE_DEPARTMENTS = Object.fromEntries(DEPARTMENTS.map(department => {
+  const codes = Array.isArray(department.value) ? department.value : [department.value];
+  return codes.map(code => [code, department.name])
+}).flat());
+
+export const departmentCodeToName = (c) => {
+  return REVERSE_DEPARTMENTS[c] ? REVERSE_DEPARTMENTS[c] : c;
+}
+
+export const getDepartments = (data) => {
+  const existingDepartments = data.map(datum => datum.department).flat();
+  return DEPARTMENTS.filter(department => {
+    const departments = Array.isArray(department.value) ? department.value : [department.value];
+    return departments.some(department => existingDepartments.includes(department));
+  });
+}
 
 
 export const RATINGS = [
@@ -39,7 +122,10 @@ const isInRange = (value, range) => {
 
 const createFilter = (filters) => {
   return (row) => {
-    if (filters.department !== '' && !filters.department.includes(row.department)) return false;
+    if (filters.department !== '') {
+      const departments = Array.isArray(filters.department) ? filters.department : [filters.department];
+      if (!row.department.some(department => departments.includes(department))) return false;
+    }
     if (filters.rating !== '' && !isInRange(row.rating, filters.rating)) return false;
     if (filters.labSize !== '' && row.size !== filters.labSize) return false;
     if (filters.workload !== '' && row.totalHours !== filters.workload) return false;
