@@ -29,6 +29,10 @@ const useStyles = makeStyles({
     marginRight: 5,
     color: 'black',
   },
+  left: {
+    marginLeft: 20,
+
+  },
   right: {
     marginLeft: 'auto',
     marginRight: 20,
@@ -60,8 +64,8 @@ const HomePage = () => {
 
   return <Box className={classes.root}>
     <Box className={classes.navbar}>
-      <IconButton href='/' align='left'>
-        <Logo size={75} />
+      <IconButton href='/' className={classes.left}>
+        <Logo size={40} />
       </IconButton>
 
       <Typography className={classes.right}>

@@ -134,9 +134,6 @@ const LabPage = () => {
         </Typography>
         <Typography variant='body1'>
           {data.description}
-          {data.description}
-          {data.description}
-          {data.description}
         </Typography>
       </Box>
       <Box>

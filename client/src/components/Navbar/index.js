@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Logo from './Logo';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    position: 'sticky',
     flexWrap: 'wrap',
   },
   left: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles({
     flexDirection: 'row',
   },
   browseButton: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    },
     marginLeft: 10,
     marginRight: 10,
     minWidth: 150
@@ -24,6 +28,9 @@ const useStyles = makeStyles({
     marginLeft: 50,
     display: 'flex',
     flexDirection: 'row',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    },
   },
   link: {
     marginLeft: 5,
@@ -31,9 +38,12 @@ const useStyles = makeStyles({
     color: 'black',
   },
   search: {
-    flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 10
+    },
+    flexGrow: 1
   }
-});
+}));
 
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState('');

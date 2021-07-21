@@ -8,26 +8,34 @@ import Spinner from '../Spinner';
 import Filter from './Filter';
 import SearchResults from './SearchResults';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
 
   },
   filters: {
     display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-end',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
     flexWrap: 'wrap',
   },
   filtersText: {
     marginRight: 10,
   },
   clearButton: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 10,
+    },
     marginLeft: 'auto',
   },
   alert: {
     marginTop: 10,
   }
-})
+}));
 
 const SearchPage = (props) => {
   const classes = useStyles();
