@@ -15,7 +15,17 @@ const Filter = (props) => {
 
   return <FormControl className={classes.root}>
     <InputLabel>{name}</InputLabel>
-    <Select label={name} value={value} onChange={e => setValue(e.target.value)}>
+    <Select
+      label={name}
+      value={value}
+      onChange={e => setValue(e.target.value)}
+      MenuProps={{
+        transformOrigin: {
+          horizontal: 0,
+          vertical: -12,
+        }
+      }}
+    >
       <MenuItem value=''>
         Any
       </MenuItem>

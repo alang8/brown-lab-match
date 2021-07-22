@@ -20,7 +20,7 @@ const NotFoundPage = () => {
     <Typography variant='h1' className={classes.header}>Oops!</Typography>
     <Typography variant='h4' className={classes.subtext}>We can't seem to find the page you're looking for.</Typography>
     <Button href='/' variant='contained' size='large'>Take me Home!</Button>
-  </Box>;
+  </Box>
 }
 
 export default NotFoundPage;

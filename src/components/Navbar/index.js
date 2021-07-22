@@ -1,14 +1,15 @@
-import { AppBar, Box, Button, IconButton, Link, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Box, Button, makeStyles, Toolbar } from '@material-ui/core';
 import SearchBar from 'material-ui-search-bar';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Logo from './Logo';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    position: 'sticky',
     flexWrap: 'wrap',
   },
   left: {
@@ -16,14 +17,29 @@ const useStyles = makeStyles({
     flexDirection: 'row',
   },
   browseButton: {
-    marginLeft: 10,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    },
+    height: 64,
     marginRight: 10,
-    minWidth: 150
+    minWidth: 150,
+  },
+  button: {
+    height: 64,
+  },
+  label: {
+    fontSize: '0.875rem',
+    fontWeight: 400,
+    textTransform: 'capitalize',
   },
   right: {
     marginLeft: 50,
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    },
   },
   link: {
     marginLeft: 5,
@@ -31,9 +47,12 @@ const useStyles = makeStyles({
     color: 'black',
   },
   search: {
-    flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 10
+    },
+    flexGrow: 1
   }
-});
+}));
 
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -48,10 +67,13 @@ const Navbar = () => {
   return <AppBar position='static' color='secondary'>
     <Toolbar className={classes.root} color='secondary'>
       <Box className={classes.left}>
-        <IconButton href='/'>
+        <Button href='/' className={classes.button}>
           <Logo size={40} />
-        </IconButton>
-        <Button className={classes.browseButton} href='/search' size='small'>
+        </Button>
+        <Button classes={{
+          root: classes.browseButton,
+          label: classes.label,
+        }} href='/search' size='small'>
           Browse Labs
         </Button>
       </Box>
@@ -65,11 +87,14 @@ const Navbar = () => {
         placeholder='Search by name, department, professor, or research area'
       />
 
-      <Typography className={classes.right}>
-        <Link className={classes.link} href='/about'>
+      <Box className={classes.right}>
+        <Button classes={{
+          root: classes.button,
+          label: classes.label,
+        }} href='/about' size='small'>
           About
-        </Link>
-      </Typography>
+        </Button>
+      </Box>
     </Toolbar>
   </AppBar>
 }

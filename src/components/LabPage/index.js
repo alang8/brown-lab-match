@@ -2,6 +2,7 @@ import { Box, Link, makeStyles, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { departmentCodeToName } from '../../utils';
 import { getLab } from '../../utils/API';
 import NotFoundPage from '../NotFoundPage';
 import Spinner from '../Spinner';
@@ -116,7 +117,7 @@ const LabPage = () => {
       </Box>
       <Box className={classes.synopsis}>
         <Typography variant='body1' component='span'>
-          {data.department.join(', ')} |&nbsp;
+          {data.department.map(departmentCodeToName).join(', ')} |&nbsp;
           {data.pis.map((pi, index) =>
             <React.Fragment key={index}>
               <Link href={pi.url} className={classes.link} rel='noopener noreferrer' target='_blank'>{pi.name}</Link>{index !== (data.pis.length - 1) ? ', ' : null}
@@ -137,9 +138,6 @@ const LabPage = () => {
           Summary
         </Typography>
         <Typography variant='body1'>
-          {data.description}
-          {data.description}
-          {data.description}
           {data.description}
         </Typography>
       </Box>

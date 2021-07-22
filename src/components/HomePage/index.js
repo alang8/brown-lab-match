@@ -3,8 +3,9 @@ import SearchBar from 'material-ui-search-bar';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Logo from './Logo';
+import Splash from './Splash';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     display: 'flex',
@@ -22,12 +23,14 @@ const useStyles = makeStyles({
   },
   bodyText: {
     textAlign: 'center',
-    marginTop: '10vh',
   },
   link: {
     marginLeft: 5,
     marginRight: 5,
     color: 'black',
+  },
+  left: {
+    marginLeft: 20,
   },
   right: {
     marginLeft: 'auto',
@@ -36,7 +39,12 @@ const useStyles = makeStyles({
   },
   search: {
     marginTop: 30,
-    width: '50%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '60%',
+    },
   },
   buttons: {
     marginTop: 15,
@@ -45,7 +53,7 @@ const useStyles = makeStyles({
     width: 150,
     margin: '0 5px',
   }
-})
+}));
 
 const HomePage = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -60,8 +68,8 @@ const HomePage = () => {
 
   return <Box className={classes.root}>
     <Box className={classes.navbar}>
-      <IconButton href='/' align='left'>
-        <Logo size={75} />
+      <IconButton href='/' className={classes.left}>
+        <Logo size={40} />
       </IconButton>
 
       <Typography className={classes.right}>
@@ -75,6 +83,7 @@ const HomePage = () => {
     </Box>
 
     <Container className={classes.body}>
+      <Splash />
       <Box className={classes.bodyText}>
         <Typography variant='h3' component='h1'><b>Brown Lab Match</b></Typography>
         <Typography variant='h5'>Helping Brown Students Navigate the Labs Since 2021</Typography>
