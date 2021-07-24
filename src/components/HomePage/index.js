@@ -52,6 +52,9 @@ const useStyles = makeStyles(theme => ({
   button: {
     width: 150,
     margin: '0 5px',
+  },
+  IconButton: {
+    marginRight: 5,
   }
 }));
 
