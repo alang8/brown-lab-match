@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     height: 64,
   },
   label: {
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     fontWeight: 400,
     textTransform: 'capitalize',
   },

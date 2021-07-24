@@ -52,9 +52,6 @@ const useStyles = makeStyles(theme => ({
   button: {
     width: 150,
     margin: '0 5px',
-  },
-  IconButton: {
-    marginRight: 5,
   }
 }));
 
@@ -70,8 +67,8 @@ const HomePage = () => {
   }
 
   return <Box className={classes.root}>
-    <Box className={classes.navbar}>
-      <IconButton href='/' className={classes.left}>
+    <Box className={classes.navbar} ml={0.5}>
+      <IconButton href='/' className={classes.left} id={IconButton}>
         <Logo size={40} />
       </IconButton>
 
